@@ -1,0 +1,106 @@
+import tkinter as tk
+from random import*
+import time
+import math
+
+root = tk.Tk()
+canv = tk.Canvas(root)
+
+
+class unit():
+	def __init__(self, x, y, atk, defe, shot, damage, rand, hp, speed, image, num, effect):
+		self.atk = atk
+		self.defe = defe
+		self.shot = shot
+		self.damage = damage
+		self.rand
+		self.hp = hp
+		self.speed = speed
+		self.id = image
+		self.x = x
+		self.y = y
+		self.v = 1
+		self.inz = speed
+		self.num = num
+		self.effect = effect
+		self.sopr
+		
+		
+	def move(self, obj):
+		r = ((self.x - obj.x)**2 + (self.y - obj.y)**2)
+		vx = v*(self.x - obj.x)/r
+		vy = v*(self.y - obj.y)/r
+	
+		while (r > 1):
+			canv.move(self.id, vx, vy)
+			self.x += vx 
+			self.y += vy
+	
+	def Defence (self):
+		self.defe *= 1.3
+	
+	def Inzilization (self):
+		self.inz *= 1.3
+		
+	def Fight (self, obj):
+		elementaldamage = elementalmod ()
+		
+		basedamage = self.damage + (rnd(100, 100*self.rand)/100)
+		
+		if (self.atk > obj.defe):
+			attackdefensemod = 1 + (self.atk - obj.defe)*0.05
+			
+		else:
+			attackdefensemod = 1/(1 + (obj.defe - self.atk)*0.05)
+			
+		if ((self.x - obj.x)**2 + (self.y - obj.y)**2 < 2):
+			physicalmod = self.physmodb()
+			
+		else:
+			physicalmod = self.physmodd()
+		
+		phusicaldamage = self.num * basedamage * attackdefensemod * physicalmod
+		
+		totalgamage = phusicaldamage + elementaldamage
+		
+	def physmodb (self):
+		a = 0
+		for ef in self.effect:
+			if (ef[0] == 0):
+				if (ef[1] == 0):
+					a += ef[2]
+		return a
+		
+	def physmodd (self):
+		a = 0
+		for ef in self.effect:
+			if (ef[0] == 0):
+				if (ef[1] == 1):
+					a += ef[2]
+		return a
+				
+	def elementalmod (self):
+		a = 0
+		for ef in self.effect:
+			if (ef[0] == 1):
+				if (ef[1] != self.sopr):
+					a += ef[2]
+					
+					
+class hero():
+		def __init__(self, atk, defe, mageforce, knowlege, luck, moral, image, skill, spell):
+			self.atk = atk
+			self.defe = defe
+			self.mageforce = mageforce
+			self.knowlege = knowlege
+			self.luck = luck
+			self.moral = moral
+			self.id = image
+			self.skill = skill
+			self.spell = spell
+			
+			
+		#def cast (self, ):
+			
+		
+		
