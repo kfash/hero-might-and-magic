@@ -69,13 +69,7 @@ class unit():
 		else:
 			attackdefensemod = 1/(1 + (obj.defe - self.atk)*0.05)
 			
-		if ((self.x - obj.x)**2 + (self.y - obj.y)**2 < 2):
-			physicalmod = self.physmodb()
-			
-		else:
-			physicalmod = self.physmodd()
-		
-		phusicaldamage = self.num * basedamage * attackdefensemod * physicalmod
+		phusicaldamage = self.num * basedamage * attackdefensemod
 		
 		totaldamage = phusicaldamage #+ elementaldamage
 		
