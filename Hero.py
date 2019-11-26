@@ -1,5 +1,6 @@
 import tkinter as tk
 from random import*
+from magic import *
 import time
 import math
 
@@ -8,11 +9,11 @@ canv = tk.Canvas(root)
 
 
 class unit():
-	def __init__(self, x, y, atk, defe, shot, damage, rand, hp, speed, image, num, effect):
-		self.atk = atk
+	def __init__(self, x, y, atc, defe, shot, damage, rand, hp, speed, image, num, effect,sleep):
+		self.atc = atc
 		self.defe = defe
 		self.damage = damage
-		self.rand
+		self.rand = rand
 		self.hpta = hp * num
 		self.hpun = hp
 		self.speed = speed
@@ -24,6 +25,7 @@ class unit():
 		self.num = num
 		self.effect = effect
 		self.sopr
+		self.sleep = sleep
 		
 		
 	def move(self, obj):
@@ -46,7 +48,10 @@ class unit():
 			self.hpta = num *self.hpun	
 		
 		
-	
+	def ApplyAllEffects(self):
+		for eff in self.effect:
+			eff.applyEffect(eff, self)
+
 	def Defence(self):
 		self.defe *= 1.3
 	
@@ -105,8 +110,8 @@ class meleeunit(unit):
 					
 					
 class hero():
-	def __init__(self, atk, defe, mageforce, knowlege, luck, moral, image, skill, spell):
-		self.atk = atk
+	def __init__(self, atc, defe, mageforce, knowlege, luck, moral, image, skill, spell):
+		self.atc = atc
 		self.defe = defe
 		self.mageforce = mageforce
 		self.mana = knowlege*10
