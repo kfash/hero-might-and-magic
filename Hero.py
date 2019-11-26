@@ -92,7 +92,7 @@ class unitarcher(unit):
 		else:
 			damage = unit.fight(self, obj)
 			
-		obj.hpta -= damage
+		odj.hpta -= damage
 		obj.recount_num()
 		
 		
