@@ -11,16 +11,16 @@ class unit():
 	def __init__(self, x, y, atk, defe, shot, damage, rand, hp, speed, image, num, effect):
 		self.atk = atk
 		self.defe = defe
-		self.shot = shot
 		self.damage = damage
 		self.rand
-		self.hp = hp
+		self.hpta = hp * num
+		self.hpun = hp
 		self.speed = speed
 		self.id = image
 		self.x = x
 		self.y = y
 		self.v = 1
-		self.inz = speed
+		self.init = speed
 		self.num = num
 		self.effect = effect
 		self.sopr
@@ -35,15 +35,26 @@ class unit():
 			canv.move(self.id, vx, vy)
 			self.x += vx 
 			self.y += vy
+			
+	def recount_num(self):
+		a = (num - 1)*self.hpun - self.hpta
+		
+		if (a > 0):
+			num =num - a//self.hpun - (a - (a//self.hpun)*self.hpun)
+			
+		if (a < - self.hpun):
+			self.hpta = num *self.hpun	
+		
+		
 	
-	def Defence (self):
+	def Defence(self):
 		self.defe *= 1.3
 	
-	def Inzilization (self):
-		self.inz *= 1.3
+	def Initiative(self):
+		self.init *= 1.3
 		
-	def Fight (self, obj):
-		elementaldamage = elementalmod ()
+	def fight(self, obj):
+		#elementaldamage = elementalmod()
 		
 		basedamage = self.damage + (rnd(100, 100*self.rand)/100)
 		
@@ -61,46 +72,51 @@ class unit():
 		
 		phusicaldamage = self.num * basedamage * attackdefensemod * physicalmod
 		
-		totalgamage = phusicaldamage + elementaldamage
+		totaldamage = phusicaldamage #+ elementaldamage
 		
-	def physmodb (self):
-		a = 0
-		for ef in self.effect:
-			if (ef[0] == 0):
-				if (ef[1] == 0):
-					a += ef[2]
-		return a
+		return totaldamage
 		
-	def physmodd (self):
-		a = 0
-		for ef in self.effect:
-			if (ef[0] == 0):
-				if (ef[1] == 1):
-					a += ef[2]
-		return a
+					
+class unitarcher(unit):
+	def __init__ (self, shoot, x, y, atk, defe, shot, damage, rand, hp, speed, image, num, effect):
+		unit.__init__ (self, x, y, atk, defe, shot, damage, rand, hp, speed, image, num, effect)
+		self.shoot = shoot
+			
+	def fight(self, obj):
+		if ((self.x - obj.x)**2 + (self.y - obj.y)**2 < 2):
+			damage = unit.fight(self, obj)/2
+		else:
+			damage = unit.fight(self, obj)
+			
+		odj.hpta -= damage
+		obj.recount_num()
+		
+		
+class meleeunit(unit):
+	def __init__(self, x, y, atk, defe, shot, damage, rand, hp, speed, image, num, effect):
+		unit.__unit__(self, x, y, atk, defe, shot, damage, rand, hp, speed, image, num, effect)
+	
+	def fight(self, obj):
+		damage = unit.fight(self, obj)
+			
+		odj.hpta -= damage
+		obj.recount_num()		
 				
-	def elementalmod (self):
-		a = 0
-		for ef in self.effect:
-			if (ef[0] == 1):
-				if (ef[1] != self.sopr):
-					a += ef[2]
 					
 					
 class hero():
-		def __init__(self, atk, defe, mageforce, knowlege, luck, moral, image, skill, spell):
-			self.atk = atk
-			self.defe = defe
-			self.mageforce = mageforce
-			self.knowlege = knowlege
-			self.luck = luck
-			self.moral = moral
-			self.id = image
-			self.skill = skill
-			self.spell = spell
+	def __init__(self, atk, defe, mageforce, knowlege, luck, moral, image, skill, spell):
+		self.atk = atk
+		self.defe = defe
+		self.mageforce = mageforce
+		self.mana = knowlege*10
+		self.luck = luck
+		self.moral = moral
+		self.id = image
+		self.skill = skill
+		self.spell = spell
 			
 			
 		#def cast (self, ):
 			
-		
 		
