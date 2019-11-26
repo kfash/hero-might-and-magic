@@ -8,9 +8,34 @@ class effect():
 		self.char=char
 		self.amount=amount
 
-	def applyEffect(self,unit)
-		if (self.char == 'atc'):
-			unit.atc += amount
+
+	def applyEffect(self,unit):
+		unit[self.char]+=self.amount
+''''		if (self.char == 'atc'):
+			unit.atc += self.amount
+		if (self.char == 'defe'):
+			unit.defe += self.amount
+		if (self.char == 'damage'):
+			unit.damage += self.amount
+		if (self.char == 'rand'):
+			unit.rand += self.amount
+		if (self.char == 'hpta'):
+			unit.hpta += self.amount
+		if (self.char == 'hpun'):
+			unit.hpun += self.amount
+		if (self.char == 'speed'):
+			unit.speed += self.amount
+		if (self.char == 'x'):
+			unit.x += self.amount
+		if (self.char == 'y'):
+			unit.y += self.amount
+		if (self.char == 'init'):
+			unit.init += self.amount
+		if (self.char == 'num'):
+			unit.num += self.amount
+		if (self.char == 'sleep'):
+			unit.sleep += self.amount'''
+
 
 class magic():
 	def __init__(self, school, image, cost):

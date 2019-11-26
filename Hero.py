@@ -24,7 +24,6 @@ class unit():
 		self.init = speed
 		self.num = num
 		self.effect = effect
-		self.sopr
 		self.sleep = sleep
 		
 		
@@ -69,7 +68,13 @@ class unit():
 		else:
 			attackdefensemod = 1/(1 + (obj.defe - self.atk)*0.05)
 			
-		phusicaldamage = self.num * basedamage * attackdefensemod
+		if ((self.x - obj.x)**2 + (self.y - obj.y)**2 < 2):
+			physicalmod = self.physmodb()
+			
+		else:
+			physicalmod = self.physmodd()
+		
+		phusicaldamage = self.num * basedamage * attackdefensemod * physicalmod
 		
 		totaldamage = phusicaldamage #+ elementaldamage
 		
