@@ -1,0 +1,29 @@
+import tkinter as tk
+from random import*
+import time
+import math
+
+
+class magic():
+	def __init__(self, school, image, cost):
+		self.school = school
+		self.image = image
+		self.cost = cost
+	
+	def Cost(self, hero)
+		hero.mana = hero.mana - cost
+
+
+class damagemagic(magic):
+	def __init__ (self, damage, school, image, cost):
+		magic.__init__ (self, school, image, cost)
+		self.damage = damage
+		
+	def damage(self, unit):
+		unit.hp = unit.hp - self.damage
+		
+		
+class effectmagic(magic)
+	def __init__ (self, effect, school, image, cost):
+		magic.__init__ (self, school, image, cost)
+		self.effect = effect
