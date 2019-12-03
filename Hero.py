@@ -1,6 +1,5 @@
 import tkinter as tk
 from random import*
-from magic import *
 import time
 import math
 
@@ -9,22 +8,24 @@ canv = tk.Canvas(root)
 
 
 class unit():
-	def __init__(self, x, y, atc, defe, shot, damage, rand, hp, speed, image, num, effect,sleep):
-		self.atc = atc
-		self.defe = defe
-		self.damage = damage
-		self.rand = rand
-		self.hpta = hp * num
-		self.hpun = hp
-		self.speed = speed
-		self.id = image
-		self.x = x
-		self.y = y
-		self.v = 1
-		self.init = speed
-		self.num = num
-		self.effect = effect
-		self.sleep = sleep
+	def __init__(self, x, y, atk, defe, shot, damage, rand, hp, speed, image, num, effect, luck, moral):
+		self.atk = atk			'''атака '''
+		self.defe = defe        '''защита'''
+		self.damage = damage    '''минимальны урон '''
+		self.rand               '''разброс урона '''
+		self.hpta = hp * num    '''хп стека '''
+		self.hpun = hp          '''хп юнита '''
+		self.speed = speed      '''скорость '''
+		self.id = image         '''изображение '''
+		self.x = x              '''положение по х в клетках'''
+		self.y = y              '''положение по у в клетках '''
+		self.v = 1              '''скорость анимации движения '''
+		self.init = speed       '''инициатива '''
+		self.num = num          '''количество юнитов в стеке '''
+		self.effect = effect    '''массив эффектов '''
+		self.luck = luck        '''удача юнита''' 
+		self.moral = moral      '''мораль юнита'''
+		self.sopr               ''''''
 		
 		
 	def move(self, obj):
@@ -47,10 +48,7 @@ class unit():
 			self.hpta = num *self.hpun	
 		
 		
-	def ApplyAllEffects(self):
-		for eff in self.effect:
-			eff.applyEffect(eff, self)
-
+	
 	def Defence(self):
 		self.defe *= 1.3
 	
@@ -92,7 +90,7 @@ class unitarcher(unit):
 		else:
 			damage = unit.fight(self, obj)
 			
-		odj.hpta -= damage
+		obj.hpta -= damage
 		obj.recount_num()
 		
 		
@@ -103,14 +101,14 @@ class meleeunit(unit):
 	def fight(self, obj):
 		damage = unit.fight(self, obj)
 			
-		odj.hpta -= damage
+		obj.hpta -= damage
 		obj.recount_num()		
 				
 					
 					
 class hero():
-	def __init__(self, atc, defe, mageforce, knowlege, luck, moral, image, skill, spell):
-		self.atc = atc
+	def __init__(self, atk, defe, mageforce, knowlege, luck, moral, image, skill, spell):
+		self.atk = atk
 		self.defe = defe
 		self.mageforce = mageforce
 		self.mana = knowlege*10
