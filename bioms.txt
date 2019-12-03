@@ -1,0 +1,12 @@
+#all bioms: SpringGreen2 DarkGoldenrod3 gray40 azure red2 SlateBlue2
+SpringGreen2 DarkGoldenrod3 gray40 azure
+SpringGreen2 SpringGreen2 SpringGreen2 SpringGreen2 SpringGreen2 DarkGoldenrod3 azure
+DarkGoldenrod3 DarkGoldenrod3 DarkGoldenrod3 DarkGoldenrod3 DarkGoldenrod3 SpringGreen2 gray40
+gray40 gray40 gray40 gray40 gray40 azure DarkGoldenrod3
+azure azure azure azure azure gray40 SpringGreen2
+SpringGreen2 SpringGreen2 SpringGreen2 SpringGreen2 SpringGreen2 DarkGoldenrod3 azure SpringGreen2 SpringGreen2 SpringGreen2 SpringGreen2 SpringGreen2 SlateBlue2
+DarkGoldenrod3 DarkGoldenrod3 DarkGoldenrod3 DarkGoldenrod3 DarkGoldenrod3 SpringGreen2 gray40 DarkGoldenrod3 DarkGoldenrod3 DarkGoldenrod3 DarkGoldenrod3 DarkGoldenrod3 red2
+gray40 gray40 gray40 gray40 gray40 azure DarkGoldenrod3 gray40 gray40 gray40 gray40 gray40 red2
+azure azure azure azure azure gray40 SpringGreen2 azure azure azure azure azure SlateBlue2
+SlateBlue2 SlateBlue2 SlateBlue2 azure SpringGreen2
+red2 red2 gray40 DarkGoldenrod3
