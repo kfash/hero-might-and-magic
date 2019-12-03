@@ -10,23 +10,23 @@ canv = tk.Canvas(root)
 
 class unit():
 	def __init__(self, x = 0, y = 0, atk = 0, defe = 0, damage = 0, rand = 0, hp = 0, speed = 0, image = None, num = 0, luck = 0, moral = 0):
-		self.atk = atk			'''атака '''
-		self.defe = defe        '''защита'''
-		self.damage = damage    '''минимальны урон '''
-		self.rand               '''разброс урона '''
-		self.hpta = hp * num    '''хп стека '''
-		self.hpun = hp          '''хп юнита '''
-		self.speed = speed      '''скорость '''
-		self.id = image         '''изображение '''
-		self.x = x              '''положение по х в клетках'''
-		self.y = y              '''положение по у в клетках '''
-		self.v = 1              '''скорость анимации движения '''
-		self.init = speed       '''инициатива '''
-		self.num = num          '''количество юнитов в стеке '''
-		self.effect = list()    '''массив эффектов '''
-		self.luck = luck        '''удача юнита''' 
-		self.moral = moral      '''мораль юнита'''
-		self.sopr               ''''''
+		self.atk = atk			#атака
+		self.defe = defe        #защита
+		self.damage = damage    #минимальны урон
+		self.rand               #разброс урона
+		self.hpta = hp * num    #хп стека
+		self.hpun = hp          #хп юнита
+		self.speed = speed      #скорость
+		self.id = image         #изображение
+		self.x = x              #положение по х в клетках
+		self.y = y              #положение по у в клетках
+		self.v = 1              #скорость анимации движения
+		self.init = speed       #инициатива
+		self.num = num          #количество юнитов в стеке
+		self.effect = list()    #массив эффектов
+		self.luck = luck        #удача юнита
+		self.moral = moral      #мораль юнита
+		self.sopr
 		
 		
 	def move(self, obj):
