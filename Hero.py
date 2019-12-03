@@ -1,5 +1,6 @@
 import tkinter as tk
 from random import*
+from magic import*
 import time
 import math
 
@@ -47,6 +48,11 @@ class unit():
 		if (a < - self.hpun):
 			self.hpta = num *self.hpun	
 		
+	
+	def ApplyAllEffects(self):
+
+		for eff in self.effect:
+			eff.applyEffect(eff, self)
 		
 	
 	def Defence(self):
@@ -121,4 +127,5 @@ class hero():
 			
 		#def cast (self, ):
 			
+		
 		
