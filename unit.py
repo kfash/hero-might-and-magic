@@ -1,13 +1,10 @@
 from Hero import *
 from magic import *
 
-all_units=[]
-unit_1=unit(1, 4, 10, 3, 1, 10, 1, 100, 3, 1, 1, [],0)
-all_units.append(unit_1)
 
 def halberdist(unit, hero, num, x, y, image):
 	unit.atk = 6 + hero.atk
-	unit,defe = 5 + hero.defe
+	unit.defe = 5 + hero.defe
 	unit.damage = 2
 	unit.rand = 1
 	unit.hpta = 10*num
@@ -23,7 +20,7 @@ def halberdist(unit, hero, num, x, y, image):
 	
 def shooter(unit, hero, num, x, y, image):
 	unit.atk = 6 + hero.atk
-	unit,defe = 3 + hero.defe
+	unit.defe = 3 + hero.defe
 	unit.damage = 4
 	unit.rand = 24
 	unit.hpta = 10*num
@@ -40,7 +37,7 @@ def shooter(unit, hero, num, x, y, image):
 	
 def royal_griffin(unit, hero, num, x, y, image):
 	unit.atk = 9 + hero.atk
-	unit,defe = 9 + hero.defe
+	unit.defe = 9 + hero.defe
 	unit.damage = 3
 	unit.rand = 3
 	unit.hpta = 25*num
@@ -56,7 +53,7 @@ def royal_griffin(unit, hero, num, x, y, image):
 	
 def crusader(unit, hero, num, x, y, image):
 	unit.atk = 12 + hero.atk
-	unit,defe = 12 + hero.defe
+	unit.defe = 12 + hero.defe
 	unit.damage = 7
 	unit.rand = 3
 	unit.hpta = 35*num
@@ -72,7 +69,7 @@ def crusader(unit, hero, num, x, y, image):
 	
 def fanatic(unit, hero, num, x, y, image):
 	unit.atk = 12 + hero.atk
-	unit,defe = 10 + hero.defe
+	unit.defe = 10 + hero.defe
 	unit.damage = 10
 	unit.rand = 2
 	unit.hpta = 30*num
@@ -89,7 +86,7 @@ def fanatic(unit, hero, num, x, y, image):
 	
 def champion(unit, hero, num, x, y, image):
 	unit.atk = 16 + hero.atk
-	unit,defe = 16 + hero.defe
+	unit.defe = 16 + hero.defe
 	unit.damage = 20
 	unit.rand = 5
 	unit.hpta = 100*num
@@ -105,7 +102,7 @@ def champion(unit, hero, num, x, y, image):
 	
 def archangel(unit, hero, num, x, y, image):
 	unit.atk = 30 + hero.atk
-	unit,defe = 30 + hero.defe
+	unit.defe = 30 + hero.defe
 	unit.damage = 50
 	unit.rand = 0
 	unit.hpta = 250*num
@@ -121,7 +118,7 @@ def archangel(unit, hero, num, x, y, image):
 	
 def master_gremlin(unit, hero, num, x, y, image):
 	unit.atk = 4 + hero.atk
-	unit,defe = 4 + hero.defe
+	unit.defe = 4 + hero.defe
 	unit.damage = 1
 	unit.rand = 1
 	unit.hpta = 4*num
@@ -138,7 +135,7 @@ def master_gremlin(unit, hero, num, x, y, image):
 	
 def obsidian_gargoyle(unit, hero, num, x, y, image):
 	unit.atk = 7 + hero.atk
-	unit,defe = 7 + hero.defe
+	unit.defe = 7 + hero.defe
 	unit.damage = 2
 	unit.rand = 1
 	unit.hpta = 16*num
@@ -154,7 +151,7 @@ def obsidian_gargoyle(unit, hero, num, x, y, image):
 	
 def iron_golele(unit, hero, num, x, y, image):
 	unit.atk = 9 + hero.atk
-	unit,defe = 10 + hero.defe
+	unit.defe = 10 + hero.defe
 	unit.damage = 4
 	unit.rand = 1
 	unit.hpta = 35*num
@@ -170,7 +167,7 @@ def iron_golele(unit, hero, num, x, y, image):
 	
 def archmage(unit, hero, num, x, y, image):
 	unit.atk = 12 + hero.atk
-	unit,defe = 9 + hero.defe
+	unit.defe = 9 + hero.defe
 	unit.damage = 7
 	unit.rand = 2
 	unit.hpta = 30*num
@@ -187,7 +184,7 @@ def archmage(unit, hero, num, x, y, image):
 	
 def master_gin(unit, hero, num, x, y, image):
 	unit.atk = 12 + hero.atk
-	unit,defe = 12 + hero.defe
+	unit.defe = 12 + hero.defe
 	unit.damage = 13
 	unit.rand = 3
 	unit.hpta = 40*num
@@ -203,7 +200,7 @@ def master_gin(unit, hero, num, x, y, image):
 	
 def queen_of_naga(unit, hero, num, x, y, image):
 	unit.atk = 16 + hero.atk
-	unit,defe = 21 + hero.defe
+	unit.defe = 21 + hero.defe
 	unit.damage = 30
 	unit.rand = 0
 	unit.hpta = 110*num
@@ -219,7 +216,7 @@ def queen_of_naga(unit, hero, num, x, y, image):
 	
 def titan(unit, hero, num, x, y, image):
 	unit.atk = 24 + hero.atk
-	unit,defe = 24 + hero.defe
+	unit.defe = 24 + hero.defe
 	unit.damage = 50
 	unit.rand = 20
 	unit.hpta = 300*num
@@ -233,3 +230,10 @@ def titan(unit, hero, num, x, y, image):
 	unit.num = num
 	unit.luck = hero.luck
 	unit.moral = hero.moral
+
+
+all_units=[]
+unit_1=unit()
+hero_1=hero()
+halberdist(unit_1, hero_1,1,1,4,None)
+all_units.append(unit_1)

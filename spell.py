@@ -135,14 +135,14 @@ def destructive_beam(unit, hero):
 	
 	hero.mana -= 10
 	
-def luck(unit, hero)
+def luck(unit, hero):
 	unit.effect.append(['luck', 2, hero.mageforce/2])
 	
 	unit.luck = 2
 	
 	hero.mana += 2
 	
-def lightning (unit, hero)
+def lightning (unit, hero):
 	unit.hpat -= 20 + hero.magicforce*25
 	unit.recount_num
 	

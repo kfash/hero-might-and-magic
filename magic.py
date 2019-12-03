@@ -1,7 +1,4 @@
-import tkinter as tk
-from random import *
-import time
-import math
+from spell import*
 
 #эффект(баф или дебаф юнита)
 class effect():
@@ -14,13 +11,12 @@ class effect():
 
 
 class magic():
-	def __init__(self, effects, school, image, cost):
-		self.effects = effects
-		self.school = school
+	def __init__(self, name, image, cost):
+		self.name = name
 		self.image = image
 		self.cost = cost
 
 #применение заклинания
-	def cast(self, unit):
-		for eff in self.effects:
-			unit.effect.append(eff)
+	def cast(self, hero, unit):
+		exec(self.name + "(unit, hero)")
+

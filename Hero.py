@@ -1,5 +1,5 @@
 import tkinter as tk
-from random import*
+from random import randrange as rnd
 from magic import*
 import time
 import math
@@ -13,7 +13,7 @@ class unit():
 		self.atk = atk			#атака
 		self.defe = defe        #защита
 		self.damage = damage    #минимальны урон
-		self.rand               #разброс урона
+		self.rand=0               #разброс урона
 		self.hpta = hp * num    #хп стека
 		self.hpun = hp          #хп юнита
 		self.speed = speed      #скорость
@@ -26,7 +26,7 @@ class unit():
 		self.effect = list()    #массив эффектов
 		self.luck = luck        #удача юнита
 		self.moral = moral      #мораль юнита
-		self.sopr
+		self.sopr=0
 		
 		
 	def move(self, obj):
@@ -106,14 +106,13 @@ class meleeunit(unit):
 	
 	def fight(self, obj):
 		damage = unit.fight(self, obj)
-			
 		obj.hpta -= damage
 		obj.recount_num()		
 				
 					
 					
 class hero():
-	def __init__(self, atk, defe, mageforce, knowlege, luck, moral, image, skill, spell):
+	def __init__(self, atk=0, defe=0, mageforce=0, knowlege=0, luck=0, moral=0, image=0, spell=0):
 		self.atk = atk
 		self.defe = defe
 		self.mageforce = mageforce
@@ -121,12 +120,4 @@ class hero():
 		self.luck = luck
 		self.moral = moral
 		self.id = image
-		self.skill = skill
 		self.spell = spell
-			
-			
-		#def cast (self, ):
-			
-		
-		
-
