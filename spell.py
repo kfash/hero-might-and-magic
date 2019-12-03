@@ -1,4 +1,5 @@
 from Hero import *
+from random import randrange as rnd
 def magic_arrow(unit, hero):
 	unit.hpat -= 20 + hero.magicforce*10
 	unit.recount_num
@@ -12,7 +13,7 @@ def thirst_for_blood(unit, hero):
 	hero.mana -= 5
 	
 def curse(unit, hero):
-	unit.effect.append(['rand', -, hero.mageforce/2])
+	unit.effect.append(['rand', -rand, hero.mageforce/2])
 	unit.rand = 0
 	
 	hero.mana -= 6
@@ -76,11 +77,11 @@ def joy(unit, hero):
 	
 	hero.mana -= 12
 	
-def teleport(unit, hero, x, y):
-	unit.x = x
-	unit.y = y
+def teleport(unit, hero):
+	unit.x = rnd(1, 12)
+	unit.y = rnd(1, 12)
 	
-	hero.mana -= 12
+	hero.mana -= 10
 	
 def prayer(unit, hero):
 	unit.effect.append(['atk', 4, hero.mageforce/2])
