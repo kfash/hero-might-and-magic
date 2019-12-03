@@ -24,6 +24,3 @@ class magic():
 	def cast(self, unit):
 		for eff in self.effects:
 			unit.effect.append(eff)
-
-	def cost(self, hero):
-		hero.mana = hero.mana - cost
