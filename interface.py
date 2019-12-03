@@ -2,7 +2,7 @@ import tkinter as tk
 from PIL import Image, ImageTk
 import BattleField as BF
 from Hero import*
-from Units import*
+from unit import*
 
 root = tk.Tk()
 fr = tk.Frame(root)
