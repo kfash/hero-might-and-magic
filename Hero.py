@@ -9,7 +9,7 @@ canv = tk.Canvas(root)
 
 
 class unit():
-	def __init__(self, x, y, atk, defe, shot, damage, rand, hp, speed, image, num, effect, luck, moral):
+	def __init__(self, x = 0, y = 0, atk = 0, defe = 0, damage = 0, rand = 0, hp = 0, speed = 0, image = None, num = 0, luck = 0, moral = 0):
 		self.atk = atk			'''атака '''
 		self.defe = defe        '''защита'''
 		self.damage = damage    '''минимальны урон '''
@@ -23,7 +23,7 @@ class unit():
 		self.v = 1              '''скорость анимации движения '''
 		self.init = speed       '''инициатива '''
 		self.num = num          '''количество юнитов в стеке '''
-		self.effect = effect    '''массив эффектов '''
+		self.effect = list()    '''массив эффектов '''
 		self.luck = luck        '''удача юнита''' 
 		self.moral = moral      '''мораль юнита'''
 		self.sopr               ''''''
@@ -86,8 +86,8 @@ class unit():
 		
 					
 class unitarcher(unit):
-	def __init__ (self, shoot, x, y, atk, defe, shot, damage, rand, hp, speed, image, num, effect):
-		unit.__init__ (self, x, y, atk, defe, shot, damage, rand, hp, speed, image, num, effect)
+	def __init__ (self, shoot, x, y, atk, defe, damage, rand, hp, speed, image, num):
+		unit.__init__ (self, x, y, atk, defe, damage, rand, hp, speed, image, num)
 		self.shoot = shoot
 			
 	def fight(self, obj):
@@ -101,8 +101,8 @@ class unitarcher(unit):
 		
 		
 class meleeunit(unit):
-	def __init__(self, x, y, atk, defe, shot, damage, rand, hp, speed, image, num, effect):
-		unit.__unit__(self, x, y, atk, defe, shot, damage, rand, hp, speed, image, num, effect)
+	def __init__(self, x, y, atk, defe, damage, rand, hp, speed, image, num):
+		unit.__unit__(self, x, y, atk, defe, damage, rand, hp, speed, image, num)
 	
 	def fight(self, obj):
 		damage = unit.fight(self, obj)
@@ -129,3 +129,4 @@ class hero():
 			
 		
 		
+
