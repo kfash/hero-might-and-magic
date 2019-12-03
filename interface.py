@@ -1,6 +1,8 @@
 import tkinter as tk
 from PIL import Image, ImageTk
 import BattleField as BF
+from Hero import*
+from Units import*
 
 root = tk.Tk()
 fr = tk.Frame(root)
@@ -37,6 +39,11 @@ class Window(tk.Frame):
 
 field = BF.Field()
 
+def print_unit(un):
+    x=un.x
+    y=un.y
+    canv.create_oval(100+x*50, y*50, 150+x*50, 50+y*50,fill="blue")
+
 def cell_update():
     field.biom_reset()
 
@@ -48,6 +55,8 @@ def cell_update():
                                                              (200 + 50 * field.cell_list[i][j].coordx),
                                                              (100 + 50 * field.cell_list[i][j].coordy),
                                                              fill=field.cell_list[i][j].biom)
+    for un in all_units:
+        print_unit(un)
 
 def start_battle():
     pass
