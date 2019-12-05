@@ -29,15 +29,20 @@ class unit():
 		self.sopr=0
 		
 		
-	def move(self, obj):
-		r = ((self.x - obj.x)**2 + (self.y - obj.y)**2)
-		vx = v*(self.x - obj.x)/r
-		vy = v*(self.y - obj.y)/r
-	
-		while (r > 1):
-			canv.move(self.id, vx, vy)
-			self.x += vx 
-			self.y += vy
+	def move(self, x, y):
+		if (abs(self.x-x)+abs(self.y-y)<self.speed):
+			for i in range (0..abs(x-self.x)-1):
+				if (x>self.x):
+					canv.move(self.id, 50, 0)
+				else:
+					canv.move(self.id, -50, 0)
+			for i in range (0..abs(y-self.y)-1):
+				if (y > self.y):
+					canv.move(self.id, 0, 50)
+				else:
+					canv.move(self.id, 0, -50)
+			self.x=x
+			self.y=y
 			
 	def recount_num(self):
 		a = (num - 1)*self.hpun - self.hpta

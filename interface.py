@@ -60,17 +60,26 @@ def cell_update():
                                                              (200 + 50 * field.cell_list[i][j].coordx),
                                                              (100 + 50 * field.cell_list[i][j].coordy),
                                                              fill=field.cell_list[i][j].biom)
+        for un in all_units:
+            print_unit(un)
+
+def round_update():
     for un in all_units:
         print_unit(un)
 
-
-def Kak(units_1, units_2):
+def conket(units_1, units_2):
     global all_units
     all_units = units_1 + units_2
 
 def start_battle():
     pass
 
+
+
+def click(event):
+	all_units[0].move((event.x-200)/50,(event.y-100)/50)
+
+canv.bind('<Button-1>', click)
 
 
 
