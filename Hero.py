@@ -1,4 +1,4 @@
-import tkinter as tk
+mport tkinter as tk
 from random import randrange as rnd
 from magic import*
 import time
@@ -9,11 +9,11 @@ canv = tk.Canvas(root)
 
 
 class unit():
-	def __init__(self, x = 0, y = 0, atk = 0, defe = 0, damage = 0, rand = 0, hp = 0, speed = 0, image = None, num = 0, luck = 0, moral = 0):
+	def __init__(self, x = 1, y = 1, atk = 0, defe = 0, damage = 0, rand = 0, hp = 0, speed = 6, image = None, num = 0, luck = 0, moral = 0, hero = 0):
 		self.atk = atk			#атака
 		self.defe = defe        #защита
 		self.damage = damage    #минимальны урон
-		self.rand=0               #разброс урона
+		self.rand=0             #разброс урона
 		self.hpta = hp * num    #хп стека
 		self.hpun = hp          #хп юнита
 		self.speed = speed      #скорость
@@ -27,29 +27,40 @@ class unit():
 		self.luck = luck        #удача юнита
 		self.moral = moral      #мораль юнита
 		self.sopr=0
+		self.hero = hero
 		
 		
 	def move(self, x, y):
-		if (abs(self.x-x)+abs(self.y-y)<self.speed):
-			for i in range (0..abs(x-self.x)-1):
-				if (x>self.x):
+		a = False
+		if (abs(self.x - x) + abs(self.y - y) < self.speed):
+			for i in range (0, abs(x - self.x)):
+				if (x > self.x):
 					canv.move(self.id, 50, 0)
+
 				else:
 					canv.move(self.id, -50, 0)
-			for i in range (0..abs(y-self.y)-1):
+				a = True
+				#time.sleep(0.5)
+			for i in range (0, abs(y - self.y)):
 				if (y > self.y):
 					canv.move(self.id, 0, 50)
+
 				else:
 					canv.move(self.id, 0, -50)
-			self.x=x
-			self.y=y
+				a = True
+				#time.sleep(0.5)
+			self.x = x
+			self.y = y
+			return a
 			
 	def recount_num(self):
-		a = (num - 1)*self.hpun - self.hpta
+		a = (self.num)*self.hpun - self.hpta
 		
 		if (a > 0):
-			num =num - a//self.hpun - (a - (a//self.hpun)*self.hpun)
-			
+			print(self.num, self.hpta, a, a // self.hpun)
+			self.num = self.num - a//self.hpun
+
+
 		if (a < - self.hpun):
 			self.hpta = num *self.hpun	
 		
@@ -69,21 +80,16 @@ class unit():
 	def fight(self, obj):
 		#elementaldamage = elementalmod()
 		
-		basedamage = self.damage + (rnd(100, 100*self.rand)/100)
+		basedamage = self.damage + (rnd(0, 100*self.rand, 1)/100)
 		
 		if (self.atk > obj.defe):
 			attackdefensemod = 1 + (self.atk - obj.defe)*0.05
 			
 		else:
 			attackdefensemod = 1/(1 + (obj.defe - self.atk)*0.05)
-			
-		if ((self.x - obj.x)**2 + (self.y - obj.y)**2 < 2):
-			physicalmod = self.physmodb()
-			
-		else:
-			physicalmod = self.physmodd()
+
 		
-		phusicaldamage = self.num * basedamage * attackdefensemod * physicalmod
+		phusicaldamage = math.trunc(self.num * basedamage * attackdefensemod)
 		
 		totaldamage = phusicaldamage #+ elementaldamage
 		
@@ -91,8 +97,8 @@ class unit():
 		
 					
 class unitarcher(unit):
-	def __init__ (self, shoot, x, y, atk, defe, damage, rand, hp, speed, image, num):
-		unit.__init__ (self, x, y, atk, defe, damage, rand, hp, speed, image, num)
+	def __init__ (self, shoot, x = 1, y = 1, atk = 0, defe = 0, damage = 0, rand = 0, hp = 0, speed = 6, image = None, num = 0, luck = 0, moral = 0, hero = 0):
+		unit.__init__ (self, x, y, atk, defe, damage, rand, hp, speed, image, num, luck, moral, hero)
 		self.shoot = shoot
 			
 	def fight(self, obj):
@@ -106,11 +112,12 @@ class unitarcher(unit):
 		
 		
 class meleeunit(unit):
-	def __init__(self, x, y, atk, defe, damage, rand, hp, speed, image, num):
-		unit.__unit__(self, x, y, atk, defe, damage, rand, hp, speed, image, num)
+	def __init__(self, x = 1, y = 1, atk = 0, defe = 0, damage = 0, rand = 0, hp = 0, speed = 6, image = None, num = 0, luck = 0, moral = 0, hero = 0):
+		unit.__init__(self, x, y, atk, defe, damage, rand, hp, speed, image, num, luck, moral, hero)
 	
 	def fight(self, obj):
 		damage = unit.fight(self, obj)
+		print("damage = ", damage)
 		obj.hpta -= damage
 		obj.recount_num()		
 				
@@ -126,3 +133,4 @@ class hero():
 		self.moral = moral
 		self.id = image
 		self.spell = spell
+
