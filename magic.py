@@ -9,6 +9,7 @@ class effect():
 
 	def applyEffect(self, unit):
 		exec("unit." + self.char + "+=" + self.amount)
+		self.duration-=1
 
 
 class magic():
