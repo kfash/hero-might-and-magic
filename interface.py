@@ -15,7 +15,7 @@ all_units = []
 
 turni = 0
 fght = 0
-unita = meleeunit()
+unita = unit()
 
 class Interface:
     def __init__(self, command1, command2, command3, command4):
@@ -104,6 +104,9 @@ def available_move (unit):
                                                                  (100 + 50 * field.cell_list[i][j].coordy),
                                                                  fill=field.cell_list[i][j].biom, outline="lightblue")
 
+def end_round():
+    for un in all_units:
+        un.ApplyAllEffects()
 
 def clickl(event):
     global all_units
@@ -129,7 +132,7 @@ def clickl(event):
                             fill=field.cell_list[i][j].biom, outline="black")
                         round_update()
 
-                        if (abs (all_units[turni].x - i - 1) + abs( all_units[turni].y - j - 1) < un.speed and abs(i - un.x) + abs(j - un.y) == 1):
+                        if ((abs (all_units[turni].x - i - 1) + abs( all_units[turni].y - j - 1) < un.speed and abs(i - un.x) + abs(j - un.y) == 1) or type(all_units[turni])==unitarcher):
                             canv.delete(field.cell_list[i][j].id)
                             field.cell_list[i][j].id = canv.create_rectangle(
                                 (200 + 50 * (field.cell_list[i][j].coordx - 1)),
@@ -141,20 +144,34 @@ def clickl(event):
                             fght = 1
                             unita = un
 
+
     else:
         print(abs (unita.x - math.trunc((event.x - 100) / 50) ), abs(unita.y - math.trunc((event.y) / 50) ))
         if (abs (unita.x - math.trunc((event.x - 100) / 50) ) + abs(unita.y - math.trunc((event.y) / 50) ) <= 1):
 
-            a = all_units[turni].move(math.trunc((event.x - 100) / 50), math.trunc((event.y) / 50))
-            round_update()
-            if (a == True):
+            if (type(all_units[turni])==meleeunit):
+                a = all_units[turni].move(math.trunc((event.x - 100) / 50), math.trunc((event.y) / 50))
+                round_update()
+                if (a == True):
+                    all_units[turni].fight(unita)
+                    unita.fight( all_units[turni])
+                    available_move(all_units[turni])
+                    turni += 1
+                    fght = 0
+                    if (turni == len(all_units)):
+                        turni = 0
+                        available_move(all_units[turni])
+                        end_round()
+                    round_update()
+            elif (type(all_units[turni])==unitarcher and all_units[turni].shoot>=0):
                 all_units[turni].fight(unita)
-                unita.fight( all_units[turni])
+                all_units[turni].shoot-=1
                 turni += 1
                 fght = 0
                 if (turni == len(all_units)):
                     turni = 0
-                available_move(all_units[turni])
+                    available_move(all_units[turni])
+                    end_round()
                 round_update()
 
     for un in all_units:
@@ -168,8 +185,9 @@ def clickl(event):
         if (a == True):
             turni+=1
             if (turni == len(all_units)):
-                turni = 0
-            available_move(all_units[turni])
+                turni=0
+                available_move(all_units[turni])
+                end_round()
             round_update()
 
 def clickr(event):
@@ -191,9 +209,6 @@ def sortbyinit (str):
 
 canv.bind('<Button-3>', clickr)
 canv.bind('<Button-1>', clickl)
-
-
-
 
 
 

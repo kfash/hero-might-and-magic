@@ -1,4 +1,4 @@
-mport tkinter as tk
+import tkinter as tk
 from random import randrange as rnd
 from magic import*
 import time
@@ -97,7 +97,7 @@ class unit():
 		
 					
 class unitarcher(unit):
-	def __init__ (self, shoot, x = 1, y = 1, atk = 0, defe = 0, damage = 0, rand = 0, hp = 0, speed = 6, image = None, num = 0, luck = 0, moral = 0, hero = 0):
+	def __init__ (self, shoot=0, x = 1, y = 1, atk = 0, defe = 0, damage = 0, rand = 0, hp = 0, speed = 6, image = None, num = 0, luck = 0, moral = 0, hero = 0):
 		unit.__init__ (self, x, y, atk, defe, damage, rand, hp, speed, image, num, luck, moral, hero)
 		self.shoot = shoot
 			
@@ -133,4 +133,3 @@ class hero():
 		self.moral = moral
 		self.id = image
 		self.spell = spell
-

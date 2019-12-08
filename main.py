@@ -23,9 +23,9 @@ def start():
         un.hero = 1
         units_1.append(un)
     for i in range(1, 7):
-        un = meleeunit()
+        un = unitarcher()
         a =  canv.create_oval(100 + 6 * 50, i * 50, 150 + 6 * 50, 50 + i * 50, fill="green")
-        halberdist(un, hero_2, 7, 12, i, a)
+        shooter(un, hero_2, 7, 12, i, a)
         un.hero = 2
         units_2.append(un)
     all_units = units_1 + units_2
