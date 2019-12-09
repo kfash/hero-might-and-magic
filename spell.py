@@ -1,4 +1,4 @@
-from Hero import *
+from Units_and_hero import *
 from random import randrange as rnd
 
 

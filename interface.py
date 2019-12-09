@@ -2,21 +2,63 @@ from tkinter import *
 from PIL import Image, ImageTk
 import math
 import BattleField as BF
-from Hero import *
+from Units_and_hero import *
 from unit import *
 
+# FIXME: написать функцию, которая отображает передвижение юнита
+
+
 root = Tk()
-Menu = Canvas(root, width=200, height=600, bg='green')
-Menu.pack(side=LEFT)
-Menu2 = Canvas(root, width=200, height=600, bg='green')
-Menu2.pack(side=RIGHT)
-Field = Canvas(root, width=601, height=601, bg='white')
-Field.pack(side=TOP)
-# support = Canvas(root, width=200, height=200, bg='black')
-# support.pack(side=BOTTOM)
-canv = Canvas()
 root.wm_title("Tkinter window")
-root.geometry("1200x700")
+root.geometry("1301x700")
+
+"""
+Инициализация различных областей программы:
+1) Menu - область с кнопками управления
+2) Menu2 - область с игровой информацией о юните или участке поля, книга заклинаний
+3) Table - поле сражения
+4) support - линия инициативы(может не появиться)
+"""
+Menu = Canvas(root, width=300, height=600, bg='green')
+Menu.pack(side=LEFT)
+Menu2 = Canvas(root, width=300, height=600, bg='green')
+Menu2.pack(side=RIGHT)
+Table = Canvas(root, width=601, height=601, bg='white')
+Table.pack(side=TOP)
+support = Canvas(root, width=601, height=100, bg='blue')
+support.pack(side=BOTTOM)
+
+"""
+Графические улучшение интерфейса(background)
+Может возникнуть проблема с тем, что background выше, чем объекты, тогда стоит написать
+cancas.delet(background)
+"""
+Menu_background_img = ImageTk.PhotoImage(Image.open("images/menu_background.jpg"))
+Menu_background = Label(root, image=Menu_background_img)
+Menu_background.pack()
+Menu.create_window(0, 0, anchor=NW, window=Menu_background)
+
+Menu2_background_img = ImageTk.PhotoImage(Image.open("images/menu_background.jpg"))
+Menu2_background = Label(root, image=Menu2_background_img)
+Menu2_background.pack()
+Menu2.create_window(0, 0, anchor=NW, window=Menu2_background)
+
+Table_background_img = ImageTk.PhotoImage(Image.open("images/Table_background.jpg"))
+Table_background = Label(root, image=Table_background_img)
+Table_background.pack()
+Table_window = Table.create_window(0, 0, anchor=NW, window=Table_background)
+
+support_background_img = ImageTk.PhotoImage(Image.open("images/support_background.jpg"))
+support_background = Label(root, image=support_background_img)
+support_background.pack()
+support_window = support.create_window(0, 0, anchor=NW, window=support_background)
+
+menu2_start_screen_img = ImageTk.PhotoImage(Image.open("images/menu2_start.jpg"))
+menu2_start_screen = Label(root, image=menu2_start_screen_img)
+menu2_start_screen.pack()
+Menu2.create_window(50, 50, anchor=NW, window=menu2_start_screen)
+
+
 
 all_units = []
 
@@ -24,55 +66,71 @@ turni = 0
 fght = 0
 unita = unit()
 
-
+# FIXME: class Menu:
 class Interface:
     def __init__(self, command1, command2, command3, command4):
-        self.restart = Button(text="reset battlefield", background="#555", foreground="#ccc", width="20", height="3",
-                              command=command1)
-        self.restart.place(x=0, y=100)
+        self.restart = Button(root, text="reset battlefield", background="#555", foreground="#ccc", width="20",
+                              height="3", command=command1)
+        self.restart_window = Menu.create_window(75, 100, anchor=NW, window=self.restart)
+
         self.start = Button(text="start battle", background="#555", foreground="#ccc", width="20", height="3",
-                            command=command2).place(x=0, y=160)
+                            command=command2)
+        self.start_window = Menu.create_window(75, 175, anchor=NW, window=self.start)
+
         self.spell_book = Button(text="spell book", background="#555", foreground="#ccc", width="20", height="3",
-                                 command=command3).place(x=0, y=220)
+                                 command=command3)
+        self.spell_book_window = Menu.create_window(75, 250, anchor=NW, window=self.spell_book)
 
         self.create_hero = Button(text="Create Hero", background="#555", foreground="#ccc", width="20", height="3",
-                                  command=command4).place(x=0, y=280)
+                                  command=command4) # что это
 
 
-class Window(tk.Frame):
-    def __init__(self, master=None):
-        tk.Frame.__init__(self, master)
-        self.master = master
-        self.pack(fill=tk.BOTH, expand=1)
+class Menu2_layout:
+    def __init__(self):
+        self.screen_start()
 
-        load = Image.open("parrot.jpg")
-        render = ImageTk.PhotoImage(load)
-        img = tk.Label(self, image=render)
-        img.image = render
-        img.place(x=0, y=0)
+    def screen_start(self):
+        pass
+        # menu2_start_screen_img = ImageTk.PhotoImage(Image.open("images/menu2_start.jpg"))
+        # menu2_start_screen = Label(root, image=menu2_start_screen_img)
+        # menu2_start_screen.pack()
+        # Menu2.create_window(50, 50, anchor=NW, window=menu2_start_screen)
+
+    def screen_info_unit(self):
+        pass
+
+    def screen_info_spell(self):
+        pass
+
+
 
 field = BF.Field()
+
+# FIXME: Change interface into new one
+# def Interface():
+#     pass
 
 def print_unit(un):
     x = un.x - 1
     y = un.y - 1
-    Field.delete(un.id)
+    Table.delete(un.id)
     if un.hero == 1:
-        un.id = Field.create_oval(2 + x * 50, 2 + y * 50, 52 + x * 50, 52 + y * 50, fill="blue")
+        un.id = Table.create_oval(2 + x * 50, 2 + y * 50, 52 + x * 50, 52 + y * 50, fill="blue")
     else:
-        un.id = Field.create_oval(2 + x * 50, 2 + y * 50, 52 + x * 50, 52 + y * 50, fill="green")
+        un.id = Table.create_oval(2 + x * 50, 2 + y * 50, 52 + x * 50, 52 + y * 50, fill="green")
 
 
 def cell_update():
+    Table.delete(Table_window)
     field.biom_reset()
     for i in range(12):
         for j in range(12):
             field.cell_list[i][j].biom = field.biom_generation(i, j)
             if field.cell_list[i][j].id is not None:
-                Field.delete(field.cell_list[i][j].id)
+                Table.delete(field.cell_list[i][j].id)
 
             # FIXME:если есть идеи, то можете попытаться исправить эту функцию, а то она походит на костыль
-            field.cell_list[i][j].id = Field.create_rectangle((2 + 50 * field.cell_list[i][j].coordx),
+            field.cell_list[i][j].id = Table.create_rectangle((2 + 50 * field.cell_list[i][j].coordx),
                                                               (2 + 50 * field.cell_list[i][j].coordy),
                                                               (2 + 50 * (field.cell_list[i][j].coordx + 1)),
                                                               (2 + 50 * (field.cell_list[i][j].coordy + 1)),
@@ -96,15 +154,15 @@ def available_move(unit):
     for i in range(12):
         for j in range(12):
             if abs(unit.x - i - 1) + abs(unit.y - j - 1) >= unit.speed:
-                field.cell_list[i][j].id = Field.create_rectangle((2 + 50 * field.cell_list[i][j].coordx),
+                field.cell_list[i][j].id = Table.create_rectangle((2 + 50 * field.cell_list[i][j].coordx),
                                                                   (2 + 50 * field.cell_list[i][j].coordy),
                                                                   (2 + 50 * (field.cell_list[i][j].coordx + 1)),
                                                                   (2 + 50 * (field.cell_list[i][j].coordy + 1)),
                                                                   fill=field.cell_list[i][j].biom, outline="black")
 
             else:
-                Field.delete(field.cell_list[i][j].id)
-                field.cell_list[i][j].id = Field.create_rectangle((2 + 50 * field.cell_list[i][j].coordx),
+                Table.delete(field.cell_list[i][j].id)
+                field.cell_list[i][j].id = Table.create_rectangle((2 + 50 * field.cell_list[i][j].coordx),
                                                                   (2 + 50 * field.cell_list[i][j].coordy),
                                                                   (2 + 50 * (field.cell_list[i][j].coordx + 1)),
                                                                   (2 + 50 * (field.cell_list[i][j].coordy + 1)),
@@ -127,8 +185,8 @@ def clickl(event):
                     all_units[turni].hero != un.hero):
                 for i in range(12):
                     for j in range(12):
-                        Field.delete(field.cell_list[i][j].id)
-                        field.cell_list[i][j].id = Field.create_rectangle(
+                        Table.delete(field.cell_list[i][j].id)
+                        field.cell_list[i][j].id = Table.create_rectangle(
                             (2 + 50 * field.cell_list[i][j].coordx),
                             (2 + 50 * field.cell_list[i][j].coordy),
                             (2 + 50 * (field.cell_list[i][j].coordx + 1)),
@@ -136,7 +194,8 @@ def clickl(event):
                             fill=field.cell_list[i][j].biom, outline="black")
                         round_update()
 
-                        if ((abs (all_units[turni].x - i - 1) + abs( all_units[turni].y - j - 1) < un.speed and abs(i - un.x) + abs(j - un.y) == 1) or type(all_units[turni])==unitarcher):
+                        if (abs(all_units[turni].x - i - 1) + abs(all_units[turni].y - j - 1) < un.speed and
+                            abs(i - un.x) + abs(j - un.y) == 1) or type(all_units[turni]) == unitarcher:
                             canv.delete(field.cell_list[i][j].id)
                             field.cell_list[i][j].id = canv.create_rectangle(
                                 (200 + 50 * (field.cell_list[i][j].coordx - 1)),
@@ -148,17 +207,16 @@ def clickl(event):
                             fght = 1
                             unita = un
 
-
     else:
         print(abs(unita.x - math.trunc((event.x - 100) / 50)), abs(unita.y - math.trunc(event.y / 50)))
         if abs(unita.x - math.trunc((event.x - 100) / 50)) + abs(unita.y - math.trunc(event.y / 50)) <= 1:
 
-            if (type(all_units[turni])==meleeunit):
-                a = all_units[turni].move(math.trunc((event.x - 100) / 50), math.trunc((event.y) / 50))
+            if type(all_units[turni]) == meleeunit:
+                a = all_units[turni].move(math.trunc((event.x - 100) / 50), math.trunc(event.y / 50))
                 round_update()
                 if (a == True):
                     all_units[turni].fight(unita)
-                    unita.fight( all_units[turni])
+                    unita.fight(all_units[turni])
                     available_move(all_units[turni])
                     turni += 1
                     fght = 0
@@ -167,9 +225,9 @@ def clickl(event):
                         available_move(all_units[turni])
                         end_round()
                     round_update()
-            elif (type(all_units[turni])==unitarcher and all_units[turni].shoot>=0):
+            elif (type(all_units[turni]) == unitarcher and all_units[turni].shoot >= 0):
                 all_units[turni].fight(unita)
-                all_units[turni].shoot-=1
+                all_units[turni].shoot -= 1
                 turni += 1
                 fght = 0
                 if (turni == len(all_units)):
@@ -183,12 +241,12 @@ def clickl(event):
             n += 1
 
     if n == 0 and fght == 0:
-        a = all_units[turni].move(math.trunc((event.x - 100) / 50), math.trunc(event.y / 50))
+        a = all_units[turni].move(math.trunc(event.x - 100 / 50), math.trunc(event.y / 50))
         round_update()
-        if (a == True):
-            turni+=1
-            if (turni == len(all_units)):
-                turni=0
+        if a == True:
+            turni += 1
+            if turni == len(all_units):
+                turni = 0
                 available_move(all_units[turni])
                 end_round()
             round_update()
@@ -215,5 +273,3 @@ def sortbyinit(str):
 
 root.bind('<Button-3>', clickr)
 root.bind('<Button-1>', clickl)
-
-
