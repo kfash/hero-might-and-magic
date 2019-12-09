@@ -26,7 +26,7 @@ magicnow=0
 turni = 0
 fght = 0
 unita = unit()
-
+end_of_game=0
 
 class Interface:
     def __init__(self, command1, command2, command3, command4):
@@ -125,6 +125,12 @@ def end_round():
     input_2 = str(input())
     global spellhero_2
     spellhero_2 = magic(input_2)
+
+    global end_of_game
+    end_of_game=1
+    for un in all_units:
+        if (un.hero!=all_units[0]):
+            end_of_game=0
 
 def clickl(event):
     global all_units
