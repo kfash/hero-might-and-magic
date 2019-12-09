@@ -62,7 +62,11 @@ class unit():
 
 
 		if (a < - self.hpun):
-			self.hpta = num *self.hpun	
+			self.hpta = num *self.hpun
+
+                if (self.num <= 0):
+                        canv.delete(self.id)
+                        	
 		
 	
 	def ApplyAllEffects(self):
