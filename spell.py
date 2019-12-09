@@ -14,9 +14,8 @@ def thirst_for_blood(unit, hero):
 
 	hero.mana -= 5
 
-# FIXME: ошибка в rand
 def curse(unit, hero):
-	ef = effect('rand', - rand, hero.mageforce/2)
+	ef = effect('rand', - unit.rand, hero.mageforce/2)
 	unit.effect.append(ef)
 	
 	hero.mana -= 6

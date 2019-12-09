@@ -13,10 +13,9 @@ class effect():
 
 
 class magic():
-	def __init__(self, name, image, cost):
+	def __init__(self, name):
 		self.name = name
-		self.image = image
-		self.cost = cost
+
 
 #применение заклинания
 	def cast(self, hero, unit):
