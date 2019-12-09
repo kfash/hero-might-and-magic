@@ -1,6 +1,4 @@
 from tkinter import *
-
-# pip install pillow
 from PIL import Image, ImageTk
 
 
@@ -17,9 +15,11 @@ class Window(Frame):
         img = Label(self, image=render)
         img.image = render
         img.place(x=0, y=0)
-
 root = Tk()
-app = Window(root)
+Menu = Canvas(root, width=300, height=600, bg='green').pack(side=LEFT)
+Menu2 = Canvas(root, width=300, height=600, bg='green').pack(side=RIGHT)
+Field = Canvas(root, width=600, height=600, bg='white').pack(side=TOP)
+support = Canvas(root, width=200, height=200, bg='black').pack(side=BOTTOM)
 root.wm_title("Tkinter window")
-root.geometry("1200x600")
+root.geometry("1200x700")
 root.mainloop()
