@@ -23,7 +23,7 @@ class unit():
 		self.v = 1              #скорость анимации движения
 		self.init = speed       #инициатива
 		self.num = num          #количество юнитов в стеке
-		self.effect = list()    #массив эффектов
+		self.effect = []   #массив эффектов
 		self.luck = luck        #удача юнита
 		self.moral = moral      #мораль юнита
 		self.sopr=0
@@ -66,9 +66,14 @@ class unit():
 		
 	
 	def ApplyAllEffects(self):
+		for i in range (0,len(self.effect)):
+			eff=self.effect[i]
+			eff.applyEffect(self)
+			self.effect[i].duration-=1
 
-		for eff in self.effect:
-			eff.applyEffect(eff, self)
+			if (self.effect[i].duration==0):
+				self.effect.pop(i)
+
 		
 	
 	def Defence(self):
