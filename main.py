@@ -1,10 +1,9 @@
 
-from Units_and_hero import*
-from magic import*
-from interface import*
-from unit import*
+from Units_and_hero import *
+from magic import *
+from interface import *
+from unit import *
 import time
-
 def start():
     global hero_1
     global hero_2
@@ -23,7 +22,7 @@ def start():
         units_1.append(un)
     for i in range(1, 7):
         un = unitarcher()
-        a =Table.create_oval(100 + 6 * 50, i * 50, 150 + 6 * 50, 50 + i * 50, fill="green")
+        a = Table.create_oval(100 + 6 * 50, i * 50, 150 + 6 * 50, 50 + i * 50, fill="green")
         shooter(un, hero_2, 7, 12, i, a)
         un.hero = 2
         units_2.append(un)
@@ -32,6 +31,7 @@ def start():
     conket(units_1, units_2)
     round_update()
 
+# FIXME: I must change the way battle initialize
 def battle_init():
     pass
 

@@ -1,6 +1,41 @@
 from Units_and_hero import *
 from magic import *
 
+"""
+Меняю способ задания юнитов, так как не понимаю, как работать со старым
+"""
+halberdist_dictionary =  {'name': '', 'attack': 0, 'defence': 0, 'damage': 0, 'rand': 0, 'hp': 0, 'speed': 0,
+                          'image': 'ex.txt', 'x': 0, 'y': 0, 'num': 0, 'luck': 0, 'moral': 0, 'fraction': 'meme'}
+crusader_dictionary =  {'name': '', 'attack': 0, 'defence': 0, 'damage': 0, 'rand': 0, 'hp': 0, 'speed': 0,
+                        'image': 'ex.txt', 'x': 0, 'y': 0, 'num': 0, 'luck': 0, 'moral': 0, 'fraction': 'meme'}
+archangel_dictionary = {'name': '', 'attack': 0, 'defence': 0, 'damage': 0, 'rand': 0, 'hp': 0, 'speed': 0,
+                        'image': 'ex.txt', 'x': 0, 'y': 0, 'num': 0, 'luck': 0, 'moral': 0, 'fraction': 'meme'}
+unit_list = {'halberdist': halberdist_dictionary, 'crusader': crusader_dictionary, 'archangel': archangel_dictionary}
+
+# Fixme: ниже данную функцию можно улучшить
+def fraction1_initialisation(unit_dictionary):
+    for dictionary in unit_dictionary:
+        with open('characteristics/units.txt') as input_file:
+            for line in input_file:
+                line_split = line.split()
+                if len(line_split) == 0 or line[0] == '#':
+                    continue  # пустые строки и строки-комментарии пропускаем
+                elif dictionary == line_split[0]:
+                    unit_dictionary[dictionary]['name'] = line_split[0]
+                    unit_dictionary[dictionary]  ['attack'] = line_split[1]
+                    unit_dictionary[dictionary]['defence'] = line_split[2]
+                    unit_dictionary[dictionary]['damage'] = line_split[3]
+                    unit_dictionary[dictionary]['rand'] = line_split[4]
+                    unit_dictionary[dictionary]['hp'] = line_split[5]
+                    unit_dictionary[dictionary]['speed'] = line_split[6]
+                    unit_dictionary[dictionary]['image'] = line_split[7]
+                    unit_dictionary[dictionary]['x'] = line_split[8]
+                    unit_dictionary[dictionary]['y'] = line_split[9]
+                    unit_dictionary[dictionary]['num'] = line_split[10]
+                    unit_dictionary[dictionary]['luck'] = line_split[11]
+                    unit_dictionary[dictionary]['moral'] = line_split[5]
+                    unit_dictionary[dictionary]['fraction'] = line_split[5]
+    return unit_dictionary
 
 def halberdist(unit, hero, num, x, y, image):
     unit.atk = 6 + hero.atk
@@ -244,9 +279,9 @@ def titan(unit, hero, num, x, y, image):
     unit.luck = hero.luck
     unit.moral = hero.moral
 
-
-all_units = []
-unit_1 = unit()
-hero_1 = hero()
-halberdist(unit_1, hero_1, 1, 1, 4, None)
-all_units.append(unit_1)
+#FIXME: wtf!?
+# all_units = []
+# unit_1 = unit()
+# hero_1 = hero()
+# halberdist(unit_1, hero_1, 1, 1, 4, None)
+# all_units.append(unit_1)

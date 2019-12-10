@@ -4,13 +4,13 @@ import math
 import BattleField as BF
 from Units_and_hero import *
 from unit import *
-from magic import*
+from magic import *
 
 # FIXME: написать функцию, которая отображает передвижение юнита
 
 
 root = Tk()
-root.wm_title("Tkinter window")
+root.wm_title("Final Fantasy XVI")
 root.geometry("1301x700")
 
 """
@@ -54,21 +54,15 @@ support_background = Label(root, image=support_background_img)
 support_background.pack()
 support_window = support.create_window(0, 0, anchor=NW, window=support_background)
 
-menu2_start_screen_img = ImageTk.PhotoImage(Image.open("images/menu2_start.jpg"))
-menu2_start_screen = Label(root, image=menu2_start_screen_img)
-menu2_start_screen.pack()
-Menu2.create_window(50, 50, anchor=NW, window=menu2_start_screen)
 
-
-
-spellhero_1=magic("")
-spellhero_2=magic("")
+spellhero_1 = magic("")
+spellhero_2 = magic("")
 all_units = []
-magicnow=0
+magicnow = 0
 turni = 0
 fght = 0
 unita = unit()
-end_of_game=0
+end_of_game = 0
 
 
 # FIXME: class Menu:
@@ -87,19 +81,30 @@ class Interface:
         self.spell_book_window = Menu.create_window(75, 250, anchor=NW, window=self.spell_book)
 
         self.create_hero = Button(text="Create Hero", background="#555", foreground="#ccc", width="20", height="3",
-                                  command=command4) # что это
+                                  command=command4)  # что это
 
 
 class Menu2_layout:
     def __init__(self):
+        # картинка для стартового окна
+        self.menu2_start_screen_img = ImageTk.PhotoImage(Image.open("images/menu2_start.jpg"))
+        self.menu2_start_screen = Label(root, image=self.menu2_start_screen_img)
+        self.menu2_start_screen.pack()
+
         self.screen_start()
+        # labels для окна с юнитами
+        self.label_attack = Label(root, text='Attack: ')
+        self.label_attack.pack()
+        self.label_defence = Label(root, text='Defence: ')
+        self.label_defence.pack()
+        self.label_unit_num = Label(root, text='Persons in unit: ')
+        self.label_unit_num.pack
+        # labels для окна с заклинаниями
+        # FIXME: написать все характеристики
 
     def screen_start(self):
-        pass
-        # menu2_start_screen_img = ImageTk.PhotoImage(Image.open("images/menu2_start.jpg"))
-        # menu2_start_screen = Label(root, image=menu2_start_screen_img)
-        # menu2_start_screen.pack()
-        # Menu2.create_window(50, 50, anchor=NW, window=menu2_start_screen)
+        #pass
+        self.menu2_start_screen_window = Menu2.create_window(50, 50, anchor=NW, window=self.menu2_start_screen)
 
     def screen_info_unit(self):
         pass
@@ -107,9 +112,19 @@ class Menu2_layout:
     def screen_info_spell(self):
         pass
 
-
+    def delete(self):
+        if self.menu2_start_screen_window is not None:
+            Menu2.delete(self.menu2_start_screen_window)
+        if self.label_unit_num_window is not None:
+            Menu2.delete(self.label_unit_num_window)
+            Menu2.delete(self.label_defence_num_window)
+            Menu2.delete(self.label_attack_window)
+            self.label_attack = Label(root, text='Attack: ')
+            self.label_defence = Label(root, text='Defence: ')
+            self.label_unit_num = Label(root, text='Persons in unit: ')
 
 field = BF.Field()
+
 
 # FIXME: Change interface into new one
 # def Interface():
@@ -147,10 +162,14 @@ def cell_update():
 def round_update():
     for un in all_units:
         print_unit(un)
+
+
 def conket(units_1, units_2):
     global all_units
     all_units = units_1 + units_2
     all_units.sort(key=sortbyinit)
+
+
 def available_move(unit):
     for i in range(12):
         for j in range(12):
@@ -167,12 +186,14 @@ def available_move(unit):
                                                                   (2 + 50 * (field.cell_list[i][j].coordx + 1)),
                                                                   (2 + 50 * (field.cell_list[i][j].coordy + 1)),
                                                                   fill=field.cell_list[i][j].biom, outline="lightblue")
+
+
 def end_round():
     for un in all_units:
         un.ApplyAllEffects()
-    magicnow=1
+    magicnow = 1
     print("Введите заклинание первого игрока")
-    input_1=str(input())
+    input_1 = str(input())
     global spellhero_1
     spellhero_1 = magic(input_1)
     print("Введите заклинание второго игрока")
@@ -181,10 +202,11 @@ def end_round():
     spellhero_2 = magic(input_2)
 
     global end_of_game
-    end_of_game=1
+    end_of_game = 1
     for un in all_units:
-        if (un.hero!=all_units[0]):
-            end_of_game=0
+        if un.hero != all_units[0]:
+            end_of_game = 0
+
 
 def clickl(event):
     global all_units
@@ -193,23 +215,24 @@ def clickl(event):
     global magicnow
     global unita
     n = 0
-    if (magicnow==1):
+    if magicnow == 1:
         for un in all_units:
-            if (math.trunc((event.x - 100) / 50) == un.x and math.trunc(event.y / 50) == un.y):
-                spellhero_1.cast(un,hero_1)
-                magicnow=2
-    elif(magicnow==2):
+            if math.trunc((event.x - 100) / 50) == un.x and math.trunc(event.y / 50) == un.y:
+                spellhero_1.cast(un, hero_1)
+                magicnow = 2
+    elif magicnow == 2:
         for un in all_units:
-            if (math.trunc((event.x - 100) / 50) == un.x and math.trunc(event.y / 50) == un.y):
-                spellhero_1.cast(un,hero_2)
-                magicnow=0
-    if (magicnow==0):
+            if math.trunc((event.x - 100) / 50) == un.x and math.trunc(event.y / 50) == un.y:
+                spellhero_1.cast(un, hero_2)
+                magicnow = 0
+    if (magicnow == 0):
         for un in all_units:
             if math.trunc((event.x - 100) / 50) == un.x and math.trunc((event.y) / 50) == un.y:
                 n += 1
         if (fght == 0):
             for un in all_units:
-                if (math.trunc((event.x - 100) / 50) == un.x and math.trunc(event.y / 50) == un.y and all_units[turni].hero != un.hero):
+                if math.trunc((event.x - 100) / 50) == un.x and \
+                        math.trunc(event.y / 50) == un.y and all_units[turni].hero != un.hero:
                     for i in range(12):
                         for j in range(12):
                             Table.delete(field.cell_list[i][j].id)
@@ -220,7 +243,8 @@ def clickl(event):
                                 (2 + 50 * (field.cell_list[i][j].coordy + 1)),
                                 fill=field.cell_list[i][j].biom, outline="black")
                             round_update()
-                            if ((abs (all_units[turni].x - i - 1) + abs( all_units[turni].y - j - 1) < un.speed and abs(i - un.x) + abs(j - un.y) == 1) or type(all_units[turni])==unitarcher):
+                            if (abs(all_units[turni].x - i - 1) + abs(all_units[turni].y - j - 1) < un.speed and
+                                abs(i - un.x) + abs(j - un.y) == 1) or type(all_units[turni]) == unitarcher:
                                 Table.delete(field.cell_list[i][j].id)
                                 field.cell_list[i][j].id = Table.create_rectangle(
                                     (200 + 50 * (field.cell_list[i][j].coordx - 1)),
@@ -234,26 +258,26 @@ def clickl(event):
         else:
             print(abs(unita.x - math.trunc((event.x - 100) / 50)), abs(unita.y - math.trunc(event.y / 50)))
             if abs(unita.x - math.trunc((event.x - 100) / 50)) + abs(unita.y - math.trunc(event.y / 50)) <= 1:
-                if (type(all_units[turni])==meleeunit):
+                if type(all_units[turni]) == meleeunit:
                     a = all_units[turni].move(math.trunc((event.x - 100) / 50), math.trunc((event.y) / 50))
                     round_update()
-                    if (a == True):
+                    if a == True:
                         all_units[turni].fight(unita)
-                        unita.fight( all_units[turni])
+                        unita.fight(all_units[turni])
                         available_move(all_units[turni])
                         turni += 1
                         fght = 0
-                        if (turni == len(all_units)):
+                        if turni == len(all_units):
                             turni = 0
                             available_move(all_units[turni])
                             end_round()
                         round_update()
-                elif (type(all_units[turni])==unitarcher and all_units[turni].shoot>=0):
+                elif type(all_units[turni]) == unitarcher and all_units[turni].shoot >= 0:
                     all_units[turni].fight(unita)
-                    all_units[turni].shoot-=1
+                    all_units[turni].shoot -= 1
                     turni += 1
                     fght = 0
-                    if (turni == len(all_units)):
+                    if turni == len(all_units):
                         turni = 0
                         available_move(all_units[turni])
                         end_round()
@@ -261,16 +285,18 @@ def clickl(event):
         for un in all_units:
             if math.trunc((event.x - 100) / 50) == un.x and math.trunc(event.y / 50) == un.y:
                 n += 1
-        if (n == 0 and fght == 0):
+        if n == 0 and fght == 0:
             a = all_units[turni].move(math.trunc((event.x - 100) / 50), math.trunc(event.y / 50))
             round_update()
-            if (a == True):
-                turni+=1
-                if (turni == len(all_units)):
-                    turni=0
+            if a == True:
+                turni += 1
+                if turni == len(all_units):
+                    turni = 0
                     available_move(all_units[turni])
                     end_round()
                 round_update()
+
+
 def clickr(event):
     global all_units
     for un in all_units:
@@ -286,7 +312,11 @@ def clickr(event):
             print("x = ", un.x)
             print("y = ", un.y)
             print("effects:", un.effect)
+
+
 def sortbyinit(str):
     return str.init
+
+
 root.bind('<Button-3>', clickr)
 root.bind('<Button-1>', clickl)
