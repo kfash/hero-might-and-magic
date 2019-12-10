@@ -6,12 +6,13 @@ from Units_and_hero import *
 from unit import *
 from magic import *
 
+
 # FIXME: написать функцию, которая отображает передвижение юнита
 
 
 root = Tk()
 root.wm_title("Final Fantasy XVI")
-root.geometry("1301x700")
+root.attributes("-fullscreen", True)
 
 """
 Инициализация различных областей программы:
@@ -53,6 +54,7 @@ support_background_img = ImageTk.PhotoImage(Image.open("images/support_backgroun
 support_background = Label(root, image=support_background_img)
 support_background.pack()
 support_window = support.create_window(0, 0, anchor=NW, window=support_background)
+
 
 
 spellhero_1 = magic("")

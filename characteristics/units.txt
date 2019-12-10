@@ -1,4 +1,4 @@
 #name attack defence damage rand hp speed image x y num luck moral fraction
-halberdist 6 5 2 1 10 5 images/halberdist.jpg 0 0 0 0 0 castle
-crusader 12 12 7 3 35 6 images/crusader.jpg 0 0 0 0 castle 
-archangel 30 30 50 0 250 18 archangel.jpg 0 0 0 0 0 castle
+halberdist 6 5 2 1 10 5 images/halberdist.jpg 0 0 20 0 0 castle
+crusader 12 12 7 3 35 6 images/crusader.jpg 0 0 10 0 castle
+archangel 30 30 50 0 250 18 archangel.jpg 0 0 0 3 0 castle
