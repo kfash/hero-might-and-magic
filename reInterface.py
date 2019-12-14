@@ -11,7 +11,8 @@ from magic import *
 
 root = Tk()
 root.wm_title("Final Fantasy XVI")
-root.attributes("-fullscreen", True)
+root.geometry("1300x700")
+root.resizable(width=False, height=False)
 
 """
 Инициализация различных областей программы:
