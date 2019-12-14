@@ -58,23 +58,67 @@ support_window = support.create_window(0, 0, anchor=NW, window=support_backgroun
 
 # FIXME: class Menu:
 class Menu_layout:
-    def __init__(self, command1, command2, command3, command4):
+    def __init__(self, command1, command2, command3, command4, command5, command7, command8, command9,
+                 command10, command11, command12, command13, command14, command15):
+
         self.reset = Button(root, text="reset battlefield", background="#555", foreground="#ccc", width="20",
                             height="3", command=command1)
         self.set = Button(root, text="set battlefield", background="#555", foreground="#ccc", width="20",
                           height="3", command=command1)
-        self.start = Button(text="start battle", background="#555", foreground="#ccc", width="20", height="3",
+        self.start = Button(root, text="start battle", background="#555", foreground="#ccc", width="20", height="3",
                             command=command2)
-        self.spell_book = Button(text="spell book", background="#555", foreground="#ccc", width="20", height="3",
-                                 command=command3)
-        self.start_game = Button(text="start game", background="#555", foreground="#ccc", width="20", height="3",
-                                 command=command4)
+        self.spell_book = Button(root, text="spell book", background="#555", foreground="#ccc", width="20", height="3",
+                                 command=self.spell_book_screen)
+        self.start_game = Button(root, text="start game", background="#555", foreground="#ccc", width="20", height="3",
+                                 command=self.pass_screen)
+        self.back_to_game = Button(root, text="back", background="#555", foreground="#ccc", width="20",
+                                   height="3", command=command5)
+        self.back_to_battle = Button(root, text="back", background="#555", foreground="#ccc", width="20",
+                                     height="3", command=self.start_screen)
+        self.back_to_spells = Button(root, text="back", background="#555", foreground="#ccc", width="20",
+                                     height="3", command=self.battle_screen)
+        self.pass_turn = Button(root, text="pass", background="#555", foreground="#ccc", width="20",
+                                height="3", command=self.pass_screen)
+        self.give_up = Button(root, text="give up", background="#555", foreground="#ccc", width="20",
+                              height="3", command=self.winner_screen)
+        self.winner = Button(root, text="♀congrats♀", background="#555", foreground="#ccc", width="20",
+                             height="3", command=self.start_screen)
+        self.magic_arrow = Button(root, text="magic arrow", background="#555", foreground="#ccc", width="20",
+                                  height="3", command=command11)
+        self.lightning_bolt = Button(root, text="lightning bolt", background="#555", foreground="#ccc", width="20",
+                                     height="3", command=command12)
+        self.blessing = Button(root, text="blessing", background="#555", foreground="#ccc", width="20",
+                               height="3", command=command13)
+        self.stone_skin = Button(root, text="stone skin", background="#555", foreground="#ccc", width="20",
+                                 height="3", command=command14)
+        self.curse = Button(root, text="curse", background="#555", foreground="#ccc", width="20",
+                            height="3", command=command15)
+        self.ready = Button(root, text="player ready", background="#555", foreground="#ccc", width="20",
+                            height="3", command=self.battle_screen)
 
-        self.reset_window = self.set_window = self.start_window = self.spell_book_window = self.start_game_window = None
+        self.reset_window = self.set_window = self.start_window = self.spell_book_window = self.start_game_window =\
+            self.back_to_game_window = self.back_to_battle_window = self.back_to_spells_window =\
+            self.pass_turn_window = self.give_up_window = self.winner_window = self.magic_arrow_window =\
+            self.lightning_bolt_window = self.blessing_window = self.stone_skin_window = self.curse_window =\
+            self.ready_window = None
+        
+        self.button_list = (self.reset_window, self.set_window, self.start_window, self.spell_book_window,
+                            self.start_game_window, self.back_to_game_window, self.back_to_battle_window,
+                            self.back_to_spells_window, self.pass_turn_window, self.give_up_window, self.winner_window,
+                            self.magic_arrow_window, self.lightning_bolt_window, self.blessing_window,
+                            self.stone_skin_window, self.curse_window, self.ready_window)
+
+        for i in self.button_list:
+            i = None
         self.start_screen()
 
     def start_screen(self):
-        self.delete()
+        self.delete(self.set_window)
+        self.delete(self.reset_window)
+        self.delete(self.start_window)
+        self.delete(self.winner_window)
+        self.delete(self.back_to_battle_window)
+        self.delete(self.start_game_window)
         if Table_window is not None:
             self.set_window = Menu.create_window(75, 100, anchor=NW, window=self.set)
         else:
@@ -82,29 +126,70 @@ class Menu_layout:
         self.start_window = Menu.create_window(75, 175, anchor=NW, window=self.start)
 
     def preparation_screen(self):
-        self.delete()
-        self.start_game_window = Menu.create_window(75, 175, anchor=NW, window=self.start_game)
+        self.delete(self.set_window)
+        self.delete(self.reset_window)
+        self.delete(self.start_window)
+        self.start_game_window = Menu.create_window(75, 100, anchor=NW, window=self.start_game)
+        self.back_to_battle_window = Menu.create_window(75, 175, anchor=NW, window=self.back_to_battle)
+
+    def pass_screen(self):
+        self.delete(self.back_to_battle_window)
+        self.delete(self.magic_arrow_window)
+        self.delete(self.blessing_window)
+        self.delete(self.stone_skin_window)
+        self.delete(self.curse_window)
+        self.delete(self.lightning_bolt_window)
+        self.delete(self.start_game_window)
+        self.delete(self.pass_turn_window)
+        self.delete(self.spell_book_window)
+        self.delete(self.give_up_window)
+        self.delete(self.back_to_spells_window)
+        self.delete(self.back_to_game_window)
+        self.ready_window = Menu.create_window(75, 100, anchor=NW, window=self.ready)
 
     def battle_screen(self):
-        self.delete()
-        self.spell_book_window = Menu.create_window(75, 250, anchor=NW, window=self.spell_book)
+        # fixme: удаление ненужных кнопок
+        self.delete(self.magic_arrow_window)
+        self.delete(self.blessing_window)
+        self.delete(self.stone_skin_window)
+        self.delete(self.curse_window)
+        self.delete(self.lightning_bolt_window)
+        self.delete(self.back_to_spells_window)
+        self.delete(self.ready_window)
 
-    def delete(self):
-        if self.set_window is not None:
-            Menu.delete(self.set_window)
-            self.set_window = None
-        if self.reset_window is not None:
-            Menu.delete(self.reset_window)
-            self.reset_window = None
-        if self.start_game_window is not None:
-            Menu.delete(self.start_game_window)
-            self.start_game_window = None
-        if self.start_window is not None:
-            Menu.delete(self.start_window)
-            self.start_window = None
-        if self.spell_book_window is not None:
-            Menu.delete(self.spell_book_window)
-            self.spell_book = None
+        self.spell_book_window = Menu.create_window(75, 100, anchor=NW, window=self.spell_book)
+        self.pass_turn_window = Menu.create_window(75, 175, anchor=NW, window=self.pass_turn)
+        self.give_up_window = Menu.create_window(75, 250, anchor=NW, window=self.give_up)
+
+    def spell_book_screen(self):
+        self.delete(self.spell_book_window)
+        self.delete(self.pass_turn_window)
+        self.delete(self.give_up_window)
+
+        self.magic_arrow_window = Menu.create_window(75, 100, anchor=NW, window=self.magic_arrow)
+        self.lightning_bolt_window = Menu.create_window(75, 175, anchor=NW, window=self.lightning_bolt)
+        self.stone_skin_window = Menu.create_window(75, 250, anchor=NW, window=self.stone_skin)
+        self.curse_window = Menu.create_window(75, 325, anchor=NW, window=self.curse)
+        self.blessing_window = Menu.create_window(75, 400, anchor=NW, window=self.blessing)
+        self.back_to_spells_window = Menu.create_window(75, 475, anchor=NW, window=self.back_to_spells)
+
+    def winner_screen(self):
+        self.delete(self.give_up_window)
+        self.delete(self.pass_turn_window)
+        self.delete(self.spell_book_window)
+        self.delete(self.magic_arrow_window)
+        self.delete(self.blessing_window)
+        self.delete(self.stone_skin_window)
+        self.delete(self.curse_window)
+        self.delete(self.lightning_bolt_window)
+        self.delete(self.back_to_spells_window)
+
+        self.winner_window = Menu.create_window(75, 100, anchor=NW, window=self.winner)
+
+    def delete(self, window):
+            if window is not None:
+                Menu.delete(window)
+                window = None
 
 
 class Menu2_layout:
@@ -179,6 +264,7 @@ def preparation():
     menu_layout.preparation_screen()
     menu2_layout.preparation_screen()
 
+
 def army_placement(fraction_list1, fraction_list2, side):
     height = root.winfo_height()
 
@@ -193,7 +279,8 @@ def army_placement(fraction_list1, fraction_list2, side):
 
 
 field = BF.Field()
-menu_layout = Menu_layout(cell_update, preparation, cell_update, cell_update)
+menu_layout = Menu_layout(cell_update, preparation, cell_update, cell_update, cell_update, cell_update, cell_update,
+                          cell_update, cell_update, cell_update, cell_update, cell_update, cell_update, cell_update)
 menu2_layout = Menu2_layout()
 
 root.mainloop()
