@@ -1,13 +1,11 @@
 from tkinter import *
 from PIL import Image, ImageTk
-import math
 import BattleField as BF
-from Units_and_hero import *
-from unit import *
-from magic import *
 
 # FIXME: написать функцию, которая отображает передвижение юнита
 
+all_units = list()
+magici = 0
 
 root = Tk()
 root.wm_title("Final Fantasy XVI")
@@ -36,9 +34,7 @@ support.pack(side=BOTTOM)
 cancas.delet(background)
 """
 Menu_background_img = ImageTk.PhotoImage(Image.open("images/menu_background.jpg"))
-Menu_background = Label(root, image=Menu_background_img)
-Menu_background.pack()
-Menu.create_window(0, 0, anchor=NW, window=Menu_background)
+imagine = Menu.create_image(2, 2, anchor=NW, image=Menu_background_img)
 
 Menu2_background_img = ImageTk.PhotoImage(Image.open("images/menu_background.jpg"))
 Menu2_background = Label(root, image=Menu2_background_img)
@@ -54,6 +50,11 @@ support_background_img = ImageTk.PhotoImage(Image.open("images/support_backgroun
 support_background = Label(root, image=support_background_img)
 support_background.pack()
 support_window = support.create_window(0, 0, anchor=NW, window=support_background)
+
+# Подгрузка текстур
+# FIXME: добавить иконки персонажей и юнитов
+archer_right = ImageTk.PhotoImage(Image.open("images/archer.png"))
+crusader_left = ImageTk.PhotoImage(Image.open("images/crusader.png"))
 
 
 # FIXME: class Menu:
@@ -96,12 +97,12 @@ class Menu_layout:
         self.ready = Button(root, text="player ready", background="#555", foreground="#ccc", width="20",
                             height="3", command=self.battle_screen)
 
-        self.reset_window = self.set_window = self.start_window = self.spell_book_window = self.start_game_window =\
-            self.back_to_game_window = self.back_to_battle_window = self.back_to_spells_window =\
-            self.pass_turn_window = self.give_up_window = self.winner_window = self.magic_arrow_window =\
-            self.lightning_bolt_window = self.blessing_window = self.stone_skin_window = self.curse_window =\
+        self.reset_window = self.set_window = self.start_window = self.spell_book_window = self.start_game_window = \
+            self.back_to_game_window = self.back_to_battle_window = self.back_to_spells_window = \
+            self.pass_turn_window = self.give_up_window = self.winner_window = self.magic_arrow_window = \
+            self.lightning_bolt_window = self.blessing_window = self.stone_skin_window = self.curse_window = \
             self.ready_window = None
-        
+
         self.button_list = (self.reset_window, self.set_window, self.start_window, self.spell_book_window,
                             self.start_game_window, self.back_to_game_window, self.back_to_battle_window,
                             self.back_to_spells_window, self.pass_turn_window, self.give_up_window, self.winner_window,
@@ -174,6 +175,9 @@ class Menu_layout:
         self.back_to_spells_window = Menu.create_window(75, 475, anchor=NW, window=self.back_to_spells)
 
     def winner_screen(self):
+        self.delete(self.set_window)
+        self.delete(self.reset_window)
+        self.delete(self.start_window)
         self.delete(self.give_up_window)
         self.delete(self.pass_turn_window)
         self.delete(self.spell_book_window)
@@ -187,9 +191,9 @@ class Menu_layout:
         self.winner_window = Menu.create_window(75, 100, anchor=NW, window=self.winner)
 
     def delete(self, window):
-            if window is not None:
-                Menu.delete(window)
-                window = None
+        if window is not None:
+            Menu.delete(window)
+            window = None
 
 
 class Menu2_layout:
@@ -238,6 +242,15 @@ class Menu2_layout:
             self.label_unit_num = Label(root, text='Persons in unit: ')
 
 
+def print_unit(un):
+    x = un.x
+    y = un.y
+    Table.delete(un.id)
+    if un.hero == 1:
+        un.id = Table.create_oval(2 + x * 50, 2 + y * 50, 52 + x * 50, 52 + y * 50, fill="blue")
+    else:
+        un.id = Table.create_oval(2 + x * 50, 2 + y * 50, 52 + x * 50, 52 + y * 50, fill="green")
+
 def cell_update():
     global Table_window
     if Table_window is not None:
@@ -263,24 +276,85 @@ def cell_update():
 def preparation():
     menu_layout.preparation_screen()
     menu2_layout.preparation_screen()
+    round_update()
+
+def round_update():
+    for un in all_units:
+        print_unit(un)
 
 
-def army_placement(fraction_list1, fraction_list2, side):
-    height = root.winfo_height()
+def conket(units_1, units_2):
+    global all_units
+    all_units = units_1 + units_2
+    all_units.sort(key=sortbyinit)
 
-    if side == 'left':
-        for units in fraction_list1:
-            units['readiness'] = False
-            root.winfo_height()
-            root.after()
-        army_placement(fraction_list2, fraction_list2, 'right')
-    else:
-        pass
+def sortbyinit(str):
+    return str.init
+
+
+def available_move(unit):
+    for i in range(12):
+        for j in range(12):
+            if abs(unit.x - i) + abs(unit.y - j) >= unit.speed:
+                Table.delete(field.cell_list[i][j].id)
+                field.cell_list[i][j].id = Table.create_rectangle((2 + 50 * field.cell_list[i][j].coordx),
+                                                                  (2 + 50 * field.cell_list[i][j].coordy),
+                                                                  (2 + 50 * (field.cell_list[i][j].coordx + 1)),
+                                                                  (2 + 50 * (field.cell_list[i][j].coordy + 1)),
+                                                                  fill=field.cell_list[i][j].biom, outline="black")
+            else:
+                Table.delete(field.cell_list[i][j].id)
+                field.cell_list[i][j].id = Table.create_rectangle((2 + 50 * field.cell_list[i][j].coordx),
+                                                                  (2 + 50 * field.cell_list[i][j].coordy),
+                                                                  (2 + 50 * (field.cell_list[i][j].coordx + 1)),
+                                                                  (2 + 50 * (field.cell_list[i][j].coordy + 1)),
+                                                                  fill=field.cell_list[i][j].biom, outline="red")
+
+
+def magic1():
+    global magici
+    magici = 1
+    print(1)
+
+def magic2():
+    global magici
+    magici = 2
+    print(2)
+
+def magic3():
+    global magici
+    magici = 3
+
+def magic4():
+    global magici
+    magici = 4
+
+def magic5():
+    global magici
+    magici = 5
+
+def magicreturn():
+    global  magici
+    a = magici
+    magici = 0
+    return a
+
+
+# def army_placement(fraction_list1, fraction_list2, side):
+#     height = root.winfo_height()
+#
+#     if side == 'left':
+#         for units in fraction_list1:
+#             units['readiness'] = False
+#             root.winfo_height()
+#             root.after()
+#         army_placement(fraction_list2, fraction_list2, 'right')
+#     else:
+#         pass
 
 
 field = BF.Field()
 menu_layout = Menu_layout(cell_update, preparation, cell_update, cell_update, cell_update, cell_update, cell_update,
-                          cell_update, cell_update, cell_update, cell_update, cell_update, cell_update, cell_update)
+                          cell_update, cell_update, magic1, magic2, magic3, magic4, magic5)
 menu2_layout = Menu2_layout()
 
-root.mainloop()

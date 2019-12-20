@@ -1,10 +1,11 @@
 from Units_and_hero import *
+from magic import *
 from random import randrange as rnd
 
 
 def magic_arrow(unit, hero):
-	unit.hpat -= 20 + hero.magicforce * 10
-	unit.recount_num
+	unit.hpta -= 20 + hero.mageforce * 10
+	unit.recount_num()
 	
 	hero.mana -= 5
 
@@ -43,7 +44,7 @@ def blessing(unit, hero):
 	hero.mana -= 5
 	
 def treatment(unit, hero):
-	unit.hpat += 20 + hero.magicforce * 5
+	unit.hpta += 20 + hero.mageforce * 5
 	
 	while unit.effect:
 		unit.effect.pop(-1)
@@ -57,8 +58,8 @@ def snaping(unit, hero):
 	hero.mana -= 5
 	
 def ice_arrow(unit, hero):
-	unit.hpat -= 20 + hero.magicforce * 20
-	unit.recount_num
+	unit.hpta -= 20 + hero.mageforce * 20
+	unit.recount_num()
 	
 	hero.mana -= 8
 	
@@ -109,8 +110,8 @@ def sadness(unit, hero):
 	hero.mana -= 4
 	
 def explosion(unit, hero):
-	unit.hpat -= 200 + hero.magicforce * 75
-	unit.recount_num
+	unit.hpta -= 200 + hero.mageforce * 75
+	unit.recount_num()
 	
 	hero.mana -= 30
 	
@@ -133,8 +134,8 @@ def luck(unit, hero):
 	hero.mana += 2
 	
 def lightning (unit, hero):
-	unit.hpat -= 20 + hero.magicforce * 25
-	unit.recount_num
+	unit.hpta -= 20 + hero.mageforce * 25
+	unit.recount_num()
 	
 	hero.mana -= 10
 	

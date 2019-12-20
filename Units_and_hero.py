@@ -1,5 +1,6 @@
-import random as rnd
+from random import randrange as rnd
 import math
+from reInterface import*
 
 class unit:
     def __init__(self, unit_dictionary):
@@ -29,17 +30,17 @@ class unit:
         if abs(self.x - x) + abs(self.y - y) < self.speed:
             for i in range(0, abs(x - self.x)):
                 if x > self.x:
-                    canv.move(self.id, 50, 0)
+                    Table.move(self.id, 50, 0)
 
                 else:
-                    canv.move(self.id, -50, 0)
+                    Table.move(self.id, -50, 0)
                 a = True
             for i in range(0, abs(y - self.y)):
                 if y > self.y:
-                    canv.move(self.id, 0, 50)
+                    Table.move(self.id, 0, 50)
 
                 else:
-                    canv.move(self.id, 0, -50)
+                    Table.move(self.id, 0, -50)
                 a = True
             self.x = x
             self.y = y
@@ -48,17 +49,24 @@ class unit:
     def recount_num(self):
         a = (self.num) * self.hpun - self.hpta
 
-        if a > 0:
+        if (a > 0):
             print(self.num, self.hpta, a, a // self.hpun)
             self.num = self.num - a // self.hpun
 
         if (a < - self.hpun):
-            self.hpta = num * self.hpun
+            self.hpta =self.num * self.hpun
+
+        if (self.num <= 0):
+            Table.delete(self.id)
 
     def ApplyAllEffects(self):
+        i = 0
+        while(i < len(self.effect)):
+            self.effect[i].applyEffect(self)
+            if ( self.effect[i].duration == 0):
+                self.effect.pop(i)
+            i += 1
 
-        for eff in self.effect:
-            eff.applyEffect(eff, self)
 
     def Defence(self):
         self.defence *= 1.3
@@ -85,10 +93,9 @@ class unit:
 
 
 class unitarcher(unit):
-    def __init__(self, shoot=0, x=1, y=1, atk=0, defe=0, damage=0, rand=0, hp=0, speed=6, image=None, num=0, luck=0,
-                 moral=0, hero=0):
-        unit.__init__(self, x, y, atk, defe, damage, rand, hp, speed, image, num, luck, moral, hero)
-        self.shoot = shoot
+    def __init__(self, unit_dictionary):
+        unit.__init__(self, unit_dictionary)
+        self.shoot = unit_dictionary['shoot']
 
     def fight(self, obj):
         if (self.x - obj.x) ** 2 + (self.y - obj.y) ** 2 < 2:
@@ -101,9 +108,8 @@ class unitarcher(unit):
 
 
 class meleeunit(unit):
-    def __init__(self, x=1, y=1, atk=0, defe=0, damage=0, rand=0, hp=0, speed=6, image=None, num=0, luck=0, moral=0,
-                 hero=0):
-        unit.__init__(self, x, y, atk, defe, damage, rand, hp, speed, image, num, luck, moral, hero)
+    def __init__(self, unit_dictionary):
+        unit.__init__(self, unit_dictionary)
 
     def fight(self, obj):
         damage = unit.fight(self, obj)
@@ -113,7 +119,7 @@ class meleeunit(unit):
 
 
 class hero():
-    def __init__(self, atk=0, defe=0, mageforce=0, knowlege=0, luck=0, moral=0, image=0, spell=0):
+    def __init__(self, atk=0, defe=0, mageforce=10, knowlege=10, luck=0, moral=0, image=0, spell=0):
         self.atk = atk
         self.defe = defe
         self.mageforce = mageforce

@@ -62,7 +62,7 @@ def shooter(unit, hero, num, x, y, image):
     unit.hpta = 10 * num
     unit.hpun = 10
     unit.speed = 6
-    unit.shoot
+    unit.shoot = 12
     unit.id = image
     unit.x = x
     unit.y = y

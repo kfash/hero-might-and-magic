@@ -1,4 +1,4 @@
-from spell import*
+
 
 #эффект(баф или дебаф юнита)
 class effect():
@@ -7,8 +7,26 @@ class effect():
 		self.amount = amount
 		self.duration=duration
 
-	def applyEffect(self, unit):
-		exec("unit." + self.char + "+=" + self.amount)
+	def applyEffect(self, obj):
+		print(self.char)
+		if (self.char == "atk"):
+			obj.atk += self.amount
+		if (self.char == "defe"):
+			obj.defe += self.amount
+		if (self.char == "damage"):
+			obj.damage += self.amount
+		if (self.char == "rand"):
+			obj.rand += self.amount
+		if (self.char == "speed"):
+			obj.speed += self.amount
+		if (self.char == "x"):
+			obj.x += self.amount
+		if (self.char == "y"):
+			obj.y += self.amount
+		if (self.char == "luck"):
+			obj.luck += self.amount
+		if (self.char == "moral"):
+			obj.moral += self.amount
 		self.duration-=1
 
 
